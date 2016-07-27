@@ -5,7 +5,7 @@ module MyRoots
 
 function bisect(f,a,b; TOL=1e-9, MAXN=3000, del=1e-9)
     # computes f(x)=0 using bisection algorithm
-    u = f(a); 
+    u = f(a);
     v = f(b);
     e = b-a;
     if sign(u)==sign(v)
@@ -46,13 +46,21 @@ function newton(p0,f,df; TOL=1e-9, MAXN=3000)
   throw(BoundsError);
 end
 
-function secant(p0,f;TOL=1e-5, MAXN=2000)
+function secant(p0,p1,f;TOL=1e-5, MAXN=2000)
     #= Func
     =#
     for i=1:MAXN
-        # actually fill this inn
-        println("Hello.")
+      while i<=MAXN
+        p=p1 - f(p1)*(p1-p0)/(f(p1)-f(p0));
+        if abs(p-p0)<TOL
+          return p
+        end
+        i+=1;
+        p0=p1;
+        p1=p;
+      end
     end
+    throw(BoundsError);
 end
 
 end
